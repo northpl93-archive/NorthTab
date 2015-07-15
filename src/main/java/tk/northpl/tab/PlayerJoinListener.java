@@ -9,7 +9,6 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.PlayerInfoData;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import com.comphenix.protocol.wrappers.WrappedGameProfile;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +26,7 @@ public final class PlayerJoinListener implements Listener
         final List<PlayerInfoData> virtualPlayersToWrite = new ArrayList<>(80);
         for (final TablistSlot wgp : Main.getInstance().getTabListHandler().getSlots().values())
         {
-            virtualPlayersToWrite.add(new PlayerInfoData(wgp.getVirtualPlayer(), Main.getInstance().TABLIST_PING, EnumWrappers.NativeGameMode.NOT_SET, WrappedChatComponent.fromText(" ")));
+            virtualPlayersToWrite.add(new PlayerInfoData(wgp.getVirtualPlayer(), Main.getInstance().TABLIST_PING, EnumWrappers.NativeGameMode.NOT_SET, WrappedChatComponent.fromText(wgp.getTextForPlayer(e.getPlayer().getName()))));
         }
         writeTab.getPlayerInfoDataLists().write(0, virtualPlayersToWrite);
         try

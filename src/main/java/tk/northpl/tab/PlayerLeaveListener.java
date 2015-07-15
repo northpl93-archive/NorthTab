@@ -1,6 +1,5 @@
 package tk.northpl.tab;
 
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 

@@ -107,33 +107,6 @@ public final class TabListHandler
 
             for (final TablistSlot slot : TabListHandler.this.slots.values())
             {
-                if (slot.isSkinNickDirty())
-                { // skin nie zostal zaktualizowany
-                    final PacketContainer add = TabListHandler.this.protocol.createPacket(PacketType.Play.Server.PLAYER_INFO);
-                    final PacketContainer remove = TabListHandler.this.protocol.createPacket(PacketType.Play.Server.PLAYER_INFO);
-
-                    add.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
-                    add.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
-
-                    for (final Player p : Bukkit.getOnlinePlayers())
-                    {
-                        try
-                        {
-                            final PlayerInfoData pid = new PlayerInfoData(slot.getVirtualPlayer(), Main.getInstance().TABLIST_PING, EnumWrappers.NativeGameMode.NOT_SET, WrappedChatComponent.fromText(slot.getTextForPlayer(p.getName())));
-                            add.getPlayerInfoDataLists().write(0, Collections.singletonList(pid));
-                            add.getPlayerInfoDataLists().write(0, Collections.singletonList(pid));
-                            TabListHandler.this.protocol.sendServerPacket(p, remove);
-                            TabListHandler.this.protocol.sendServerPacket(p, add);
-                        }
-                        catch (final InvocationTargetException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    slot.setIsSkinNickDirty(false);
-                } // koniec aktualizacji skina na tabie
-
                 if (slot.isGlobalTextDirty())
                 {
                     final PlayerInfoData pid = new PlayerInfoData(slot.getVirtualPlayer(), Main.getInstance().TABLIST_PING, EnumWrappers.NativeGameMode.NOT_SET, WrappedChatComponent.fromText(slot.getGlobalText()));
@@ -165,6 +138,33 @@ public final class TabListHandler
                         cpt.setDirty(false);
                     }
                 }
+
+                if (slot.isSkinNickDirty())
+                { // skin nie zostal zaktualizowany
+                    final PacketContainer add = TabListHandler.this.protocol.createPacket(PacketType.Play.Server.PLAYER_INFO);
+                    final PacketContainer remove = TabListHandler.this.protocol.createPacket(PacketType.Play.Server.PLAYER_INFO);
+
+                    add.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
+                    add.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
+
+                    for (final Player p : Bukkit.getOnlinePlayers())
+                    {
+                        try
+                        {
+                            final PlayerInfoData pid = new PlayerInfoData(slot.getVirtualPlayer(), Main.getInstance().TABLIST_PING, EnumWrappers.NativeGameMode.NOT_SET, WrappedChatComponent.fromText(slot.getTextForPlayer(p.getName())));
+                            add.getPlayerInfoDataLists().write(0, Collections.singletonList(pid));
+                            add.getPlayerInfoDataLists().write(0, Collections.singletonList(pid));
+                            TabListHandler.this.protocol.sendServerPacket(p, remove);
+                            TabListHandler.this.protocol.sendServerPacket(p, add);
+                        }
+                        catch (final InvocationTargetException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    slot.setIsSkinNickDirty(false);
+                } // koniec aktualizacji skina na tabie
             }
 
             for (final Map.Entry<String, List<PlayerInfoData>> p : cache.entrySet())
