@@ -5,9 +5,6 @@ import java.util.List;
 
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 public final class TablistSlot
 {
     private final WrappedGameProfile     virtualPlayer;
@@ -119,7 +116,15 @@ public final class TablistSlot
     @Override
     public String toString()
     {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString()).append("virtualPlayer", this.virtualPlayer).append("skinNick", this.skinNick).append("isSkinNickDirty", this.isSkinNickDirty).append("globalText", this.globalText).append("isGlobalTextDirty", this.isGlobalTextDirty).append("customPlayersTexts", this.customPlayersTexts).toString();
+        final StringBuilder sb = new StringBuilder("TablistSlot{");
+        sb.append("virtualPlayer=").append(this.virtualPlayer);
+        sb.append(", skinNick='").append(this.skinNick).append('\'');
+        sb.append(", isSkinNickDirty=").append(this.isSkinNickDirty);
+        sb.append(", globalText='").append(this.globalText).append('\'');
+        sb.append(", isGlobalTextDirty=").append(this.isGlobalTextDirty);
+        sb.append(", customPlayersTexts=").append(this.customPlayersTexts);
+        sb.append('}');
+        return sb.toString();
     }
 
     public static final class CustomPlayerText
@@ -164,7 +169,12 @@ public final class TablistSlot
         @Override
         public String toString()
         {
-            return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString()).append("playerNick", this.playerNick).append("text", this.text).append("isDirty", this.isDirty).toString();
+            final StringBuilder sb = new StringBuilder("CustomPlayerText{");
+            sb.append("playerNick='").append(this.playerNick).append('\'');
+            sb.append(", text='").append(this.text).append('\'');
+            sb.append(", isDirty=").append(this.isDirty);
+            sb.append('}');
+            return sb.toString();
         }
     }
 }

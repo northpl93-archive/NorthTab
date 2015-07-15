@@ -124,7 +124,8 @@ public final class TabListHandler
                             add.getPlayerInfoDataLists().write(0, Collections.singletonList(pid));
                             TabListHandler.this.protocol.sendServerPacket(p, remove);
                             TabListHandler.this.protocol.sendServerPacket(p, add);
-                        } catch (final InvocationTargetException e)
+                        }
+                        catch (final InvocationTargetException e)
                         {
                             e.printStackTrace();
                         }
