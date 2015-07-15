@@ -1,0 +1,5 @@
+# Domyslna glowa która bêdzie siê pojawiaæ na tabliœcie gdy gracz bêdzie zweryfikowany w online-mode
+default-head: Notch
+# Co ile maj¹ byæ wysy³ane aktualizacje tablisty (w tickach)
+update-time: 20
+tablist-ping: 100

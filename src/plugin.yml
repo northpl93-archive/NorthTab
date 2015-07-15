@@ -1,0 +1,7 @@
+name: TabAPI
+version: 1.0
+main: tk.northpl.tab.Main
+author: NorthPL
+website: http://northpl.tk
+database: false
+depend: [ProtocolLib]
