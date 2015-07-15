@@ -1,5 +1,5 @@
 name: NorthTab
-version: 1.0
+version: 1.1-INDEV
 main: tk.northpl.tab.Main
 author: NorthPL
 website: http://northpl.tk
