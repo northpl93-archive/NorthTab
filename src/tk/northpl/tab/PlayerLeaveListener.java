@@ -1,6 +1,8 @@
 package tk.northpl.tab;
 
 import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,7 +28,7 @@ public class PlayerLeaveListener implements Listener
         for (final TablistSlot tablistSlot : Main.getInstance().getTabListHandler().getSlots().values())
         {
             //noinspection ForLoopReplaceableByForEach
-            for (final Iterator<TablistSlot.CustomPlayerText> iterator = tablistSlot.getCustomPlayersTexts().iterator(); iterator.hasNext(); )
+            for (final ListIterator<TablistSlot.CustomPlayerText> iterator = new CopyOnWriteArrayList<>(tablistSlot.getCustomPlayersTexts()).listIterator(); iterator.hasNext(); )
             {
                 final TablistSlot.CustomPlayerText cpt = iterator.next();
                 if (cpt.getPlayerNick().equals(player))
