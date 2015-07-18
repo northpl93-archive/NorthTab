@@ -19,7 +19,6 @@ public final class PlayerJoinListener implements Listener
     @EventHandler
     public void onJoin(final PlayerJoinEvent e)
     {
-        // TODO don't create new list every player join
         final PacketContainer writeTab = Main.getInstance().getTabListHandler().getProtocol().createPacket(PacketType.Play.Server.PLAYER_INFO);
         writeTab.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
 

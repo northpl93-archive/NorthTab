@@ -3,3 +3,4 @@ default-head: Notch
 # Co ile maj¹ byæ wysy³ane aktualizacje tablisty (w tickach)
 update-time: 20
 tablist-ping: 100
+debug: false

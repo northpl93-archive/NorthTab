@@ -15,7 +15,7 @@ public final class API
 
     public static void setTabSlot(final Player p, final int x, final int y, final String content)
     {
-        Main.getInstance().getTabListHandler().getSlot(x, y).getCustomPlayersTexts().add(new TablistSlot.CustomPlayerText(p.getName(), content));
+        Main.getInstance().getTabListHandler().getSlot(x, y).setTextForPlayer(p.getName(), content);
     }
 
     public static void updateSkin(final int x, final int y, String newNick)
@@ -25,5 +25,14 @@ public final class API
             newNick = Main.getInstance().DEFAULT_HEAD;
         }
         Main.getInstance().getTabListHandler().updateSkin(x, y, newNick);
+    }
+
+    public static void updateSkin(final Player p, final int x, final int y, String newSkin)
+    {
+        if (newSkin == null)
+        {
+            newSkin = Main.getInstance().DEFAULT_HEAD;
+        }
+        Main.getInstance().getTabListHandler().getSlot(x, y).setSkinForPlayer(p.getName(), newSkin);
     }
 }

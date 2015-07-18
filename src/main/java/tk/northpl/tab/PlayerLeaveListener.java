@@ -27,12 +27,13 @@ public class PlayerLeaveListener implements Listener
         for (final TablistSlot tablistSlot : Main.getInstance().getTabListHandler().getSlots().values())
         {
             //noinspection ForLoopReplaceableByForEach
-            for (final ListIterator<TablistSlot.CustomPlayerText> iterator = new CopyOnWriteArrayList<>(tablistSlot.getCustomPlayersTexts()).listIterator(); iterator.hasNext(); )
+            for (final ListIterator<TablistSlot.CustomPlayer> iterator = new CopyOnWriteArrayList<>(tablistSlot.getCustomPlayersOptions()).listIterator(); iterator.hasNext(); )
             {
-                final TablistSlot.CustomPlayerText cpt = iterator.next();
+                final TablistSlot.CustomPlayer cpt = iterator.next();
                 if (cpt.getPlayerNick().equals(player))
                 {
-                    tablistSlot.getCustomPlayersTexts().remove(cpt);
+                    Main.getInstance().debug("Removed CustomPlayer object: " + cpt);
+                    tablistSlot.getCustomPlayersOptions().remove(cpt);
                 }
             }
         }

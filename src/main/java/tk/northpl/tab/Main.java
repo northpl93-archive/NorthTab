@@ -15,6 +15,7 @@ public final class Main extends JavaPlugin
     public int UPDATE_TIME;
     public String DEFAULT_HEAD;
     public int TABLIST_PING;
+    public boolean DEBUG;
 
     @Override
     public void onEnable()
@@ -36,6 +37,7 @@ public final class Main extends JavaPlugin
         this.UPDATE_TIME = this.getConfig().getInt("update-time", 20);
         this.DEFAULT_HEAD = this.getConfig().getString("default-head", "Notch");
         this.TABLIST_PING = this.getConfig().getInt("tablist-ping", 100);
+        this.DEBUG = this.getConfig().getBoolean("debug", false);
     }
 
     public TabListHandler getTabListHandler()
@@ -50,7 +52,15 @@ public final class Main extends JavaPlugin
 
     public void logInfo(final String message)
     {
-        this.logger.info(message);
+        this.logger.info("[NorthTab]" + message);
+    }
+
+    public void debug(final String debug)
+    {
+        if (this.DEBUG)
+        {
+            this.logInfo("[DEBUG]" + debug);
+        }
     }
 
     public static Main getInstance()

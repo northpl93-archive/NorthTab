@@ -12,7 +12,7 @@ public final class TablistSlot
     private       boolean                isSkinNickDirty;
     private       String                 globalText;
     private       boolean                isGlobalTextDirty;
-    private final List<CustomPlayerText> customPlayersTexts;
+    private final List<CustomPlayer>     customPlayersOptions;
 
     public TablistSlot(final WrappedGameProfile virtualPlayer, final String skinNick, final String globalText)
     {
@@ -20,7 +20,7 @@ public final class TablistSlot
         this.skinNick = skinNick;
         this.globalText = globalText;
 
-        this.customPlayersTexts = new ArrayList<>(0);
+        this.customPlayersOptions = new ArrayList<>(0);
     }
 
     void setSkinNick(final String skinNick)
@@ -69,9 +69,9 @@ public final class TablistSlot
         return this.globalText;
     }
 
-    public List<CustomPlayerText> getCustomPlayersTexts()
+    public List<CustomPlayer> getCustomPlayersOptions()
     {
-        return this.customPlayersTexts;
+        return this.customPlayersOptions;
     }
 
     public boolean isGlobalTextDirty()
@@ -86,31 +86,74 @@ public final class TablistSlot
 
     public String getTextForPlayer(final String player)
     {
-        for (final CustomPlayerText ctt : this.customPlayersTexts)
+        for (final CustomPlayer ctt : this.customPlayersOptions)
         {
             if (ctt.getPlayerNick().equals(player))
             {
-                return ctt.getText();
+                if (ctt.getText() != null)
+                {
+                    return ctt.getText();
+                }
+                else
+                {
+                    break;
+                }
             }
         }
         return this.globalText;
     }
 
-    public void setForPlayer(final String player, final String text)
+    public void setTextForPlayer(final String player, final String text)
     {
-        for (final CustomPlayerText ctt : this.customPlayersTexts)
+        for (final CustomPlayer ctt : this.customPlayersOptions)
         {
             if (ctt.getPlayerNick().equals(player))
             {
-                ctt.setText(text);
-                if (! ctt.getText().equals(text))
+                if (! text.equals(ctt.getText()))
                 {
-                    ctt.setDirty(true);
+                    ctt.setTextDirty(true);
                 }
+                ctt.setText(text);
                 return;
             }
         }
-        this.customPlayersTexts.add(new CustomPlayerText(player, text));
+        this.customPlayersOptions.add(new CustomPlayer(player, text, null));
+    }
+
+    public String getSkinForPlayer(final String player)
+    {
+        for (final CustomPlayer ctt : this.customPlayersOptions)
+        {
+            if (ctt.getPlayerNick().equals(player))
+            {
+                if (ctt.getSkin() != null)
+                {
+                    return ctt.getSkin();
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        return this.skinNick;
+    }
+
+    public void setSkinForPlayer(final String player, final String skin)
+    {
+        for (final CustomPlayer ctt : this.customPlayersOptions)
+        {
+            if (ctt.getPlayerNick().equals(player))
+            {
+                if (! skin.equals(ctt.getSkin()))
+                {
+                    ctt.setIsSkinDirty(true);
+                }
+                ctt.setSkin(skin);
+                return;
+            }
+        }
+        this.customPlayersOptions.add(new CustomPlayer(player, null, skin));
     }
 
     @Override
@@ -122,23 +165,29 @@ public final class TablistSlot
         sb.append(", isSkinNickDirty=").append(this.isSkinNickDirty);
         sb.append(", globalText='").append(this.globalText).append('\'');
         sb.append(", isGlobalTextDirty=").append(this.isGlobalTextDirty);
-        sb.append(", customPlayersTexts=").append(this.customPlayersTexts);
+        sb.append(", customPlayersOptions=").append(this.customPlayersOptions);
         sb.append('}');
         return sb.toString();
     }
 
-    public static final class CustomPlayerText
+    public static final class CustomPlayer
     {
         private final String  playerNick;
-        private       String  text;
-        private       boolean isDirty;
 
-        public CustomPlayerText(final String playerNick, final String text)
+        private       String  text;
+        private       boolean isTextDirty;
+
+        private       String  skin;
+        private       boolean isSkinDirty;
+
+        public CustomPlayer(final String playerNick, final String text, final String skin)
         {
             this.playerNick = playerNick;
             this.text = text;
+            this.skin = skin;
 
-            this.isDirty = true;
+            this.isTextDirty = text != null;
+            this.isSkinDirty = skin != null;
         }
 
         public String getPlayerNick()
@@ -151,28 +200,50 @@ public final class TablistSlot
             return this.text;
         }
 
-        public boolean isDirty()
-        {
-            return this.isDirty;
-        }
-
         void setText(final String text)
         {
             this.text = text;
         }
 
-        void setDirty(final boolean dirty)
+        public boolean isTextDirty()
         {
-            this.isDirty = dirty;
+            return this.isTextDirty;
+        }
+
+        void setTextDirty(final boolean dirty)
+        {
+            this.isTextDirty = dirty;
+        }
+
+        public String getSkin()
+        {
+            return this.skin;
+        }
+
+        public void setSkin(final String skin)
+        {
+            this.skin = skin;
+        }
+
+        public boolean isSkinDirty()
+        {
+            return this.isSkinDirty;
+        }
+
+        public void setIsSkinDirty(final boolean isSkinDirty)
+        {
+            this.isSkinDirty = isSkinDirty;
         }
 
         @Override
         public String toString()
         {
-            final StringBuilder sb = new StringBuilder("CustomPlayerText{");
+            final StringBuilder sb = new StringBuilder("CustomPlayer{");
             sb.append("playerNick='").append(this.playerNick).append('\'');
             sb.append(", text='").append(this.text).append('\'');
-            sb.append(", isDirty=").append(this.isDirty);
+            sb.append(", isTextDirty=").append(this.isTextDirty);
+            sb.append(", skin='").append(this.skin).append('\'');
+            sb.append(", isSkinDirty=").append(this.isSkinDirty);
             sb.append('}');
             return sb.toString();
         }
